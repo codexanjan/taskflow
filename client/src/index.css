@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+}
+
+@layer base {
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    transition: background-color 0.5s ease, color 0.3s ease;
+  }
+
+  body {
+    background-color: #f1f5f9;
+    color: #1e293b;
+  }
+
+  body.dark {
+    background-color: #0b0f19;
+    color: #f8fafc;
+  }
+
+  /* Custom thin scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.25);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(156, 163, 175, 0.45);
+  }
+}
+
+/* Glassmorphism custom classes */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
+}
+
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.04);
+}
+
+.dark .glass-card {
+  background: rgba(30, 41, 59, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* Glowing background animations */
+@keyframes float1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.15); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-50px, 40px) scale(1.2); }
+}
+
+@keyframes float3 {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  40% { transform: translate(40px, 30px) scale(0.85); }
+}
+
+.animate-float-1 {
+  animation: float1 25s infinite ease-in-out;
+}
+
+.animate-float-2 {
+  animation: float2 30s infinite ease-in-out;
+}
+
+.animate-float-3 {
+  animation: float3 28s infinite ease-in-out;
+}
+
+/* Custom glow borders on hover */
+.glow-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glow-hover:hover {
+  border-color: rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+}
+
+.glow-hover-red:hover {
+  border-color: rgba(239, 68, 68, 0.4);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.15);
+}
+
+.glow-hover-green:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+/* Pulse animation for high priority */
+@keyframes pulsing-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(239, 68, 68, 0.15); }
+  50% { box-shadow: 0 0 15px rgba(239, 68, 68, 0.35); }
+}
+
+.animate-glow-red {
+  animation: pulsing-glow 2.5s infinite;
+}
+
+/* --- Theme Extensions --- */
+
+body.theme-cyberpunk {
+  background-color: #050510 !important;
+  background-image: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.08) 0%, transparent 40%) !important;
+  color: #00ffcc !important;
+}
+body.theme-cyberpunk.dark {
+  background-color: #020208 !important;
+}
+body.theme-cyberpunk .glass-panel {
+  background: rgba(10, 5, 25, 0.65) !important;
+  border: 1px solid rgba(0, 255, 204, 0.25) !important;
+  box-shadow: 0 0 20px rgba(0, 255, 204, 0.15) !important;
+}
+body.theme-cyberpunk .glass-card {
+  background: rgba(15, 10, 35, 0.8) !important;
+  border: 1px solid rgba(236, 72, 153, 0.25) !important;
+}
+
+body.theme-sunset {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde047 50%, #f97316 100%) !important;
+  color: #431407 !important;
+}
+body.theme-sunset.dark {
+  background: linear-gradient(135deg, #1c0c07 0%, #2e1005 50%, #431407 100%) !important;
+  color: #ffedd5 !important;
+}
+body.theme-sunset .glass-panel {
+  background: rgba(255, 253, 250, 0.4) !important;
+  border: 1px solid rgba(249, 115, 22, 0.3) !important;
+}
+body.theme-sunset.dark .glass-panel {
+  background: rgba(43, 20, 7, 0.5) !important;
+  border: 1px solid rgba(249, 115, 22, 0.2) !important;
+}
+
+body.theme-forest {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%) !important;
+  color: #1b5e20 !important;
+}
+body.theme-forest.dark {
+  background: linear-gradient(135deg, #051a0b 0%, #0d2b14 100%) !important;
+  color: #e8f5e9 !important;
+}
+body.theme-forest .glass-panel {
+  background: rgba(255, 255, 255, 0.45) !important;
+  border: 1px solid rgba(76, 175, 80, 0.3) !important;
+}
+body.theme-forest.dark .glass-panel {
+  background: rgba(5, 26, 11, 0.5) !important;
+  border: 1px solid rgba(76, 175, 80, 0.2) !important;
+}
+
+body.theme-lavender {
+  background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%) !important;
+  color: #4a148c !important;
+}
+body.theme-lavender.dark {
+  background: linear-gradient(135deg, #12051d 0%, #210d35 100%) !important;
+  color: #f3e5f5 !important;
+}
+body.theme-lavender .glass-panel {
+  background: rgba(255, 255, 255, 0.45) !important;
+  border: 1px solid rgba(156, 39, 176, 0.3) !important;
+}
+body.theme-lavender.dark .glass-panel {
+  background: rgba(21, 13, 53, 0.5) !important;
+  border: 1px solid rgba(156, 39, 176, 0.2) !important;
+}
+
+/* Custom wallpaper backgrounds */
+body.bg-nebula {
+  background-image: radial-gradient(circle at 20% 30%, rgba(139, 92, 246, 0.12), transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(244, 63, 94, 0.12), transparent 50%) !important;
+}
+body.bg-cyber {
+  background-image: linear-gradient(rgba(11, 15, 25, 0.9), rgba(11, 15, 25, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60"><path d="M 0 0 L 60 0 L 60 60 L 0 60 Z" fill="none" stroke="rgba(0, 255, 204, 0.03)" stroke-width="1"/></svg>') !important;
+}
+body.bg-warm {
+  background-image: linear-gradient(rgba(28, 12, 7, 0.9), rgba(28, 12, 7, 0.9)), radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.15), transparent 80%) !important;
+}
