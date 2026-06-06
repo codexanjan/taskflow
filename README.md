@@ -220,6 +220,12 @@ Add screenshots here after completing the project.
 
 ---
 
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](file:///c:/Users/anjan/OneDrive/Documents/projects/to%20do%20list/LICENSE) file for details.
+
+---
+
 ## 👨‍💻 Author
 
 **Anjan Shetty**
