@@ -7,6 +7,7 @@ import TaskForm from './TaskForm';
 import CalendarView from './CalendarView';
 import KanbanBoard from './KanbanBoard';
 import ProductivityCentre from './ProductivityCentre';
+import ErrorBoundary from './ErrorBoundary';
 import { useTheme } from '../context/ThemeContext';
 import { 
   Plus, Search, Filter, ArrowUpDown, Info, FolderOpen, 
@@ -194,8 +195,8 @@ export default function Dashboard() {
         if (t.completed || t.isDeleted || !t.reminderTime) return;
         const reminderDate = new Date(t.reminderTime);
         if (reminderDate <= now && !t.reminded) {
-          if (Notification.permission === 'granted') {
-            new Notification('Task Reminder Alert! ⏰', {
+          if ('Notification' in window && window.Notification.permission === 'granted') {
+            new window.Notification('Task Reminder Alert! ⏰', {
               body: `Don't forget: "${t.title}" is due.`,
               icon: '/icon.png',
               tag: t._id,
@@ -500,7 +501,9 @@ export default function Dashboard() {
       {/* RENDER ACTIVE VIEWS */}
       <div className="w-full">
         {mainView === 'productivity' && (
-          <ProductivityCentre tasks={tasks} onTaskImported={fetchTasks} guestMode={guestMode} />
+          <ErrorBoundary onReset={fetchTasks}>
+            <ProductivityCentre tasks={tasks} onTaskImported={fetchTasks} guestMode={guestMode} />
+          </ErrorBoundary>
         )}
 
         {mainView === 'board' && (

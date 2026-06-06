@@ -80,7 +80,7 @@ export default function GoalTracker({ tasks, guestMode }) {
     const keywords = goal.title.toLowerCase().split(' ').filter(w => w.length > 3);
     if (keywords.length === 0) return 0;
     
-    const matchingTasks = tasks.filter(t => 
+    const matchingTasks = (tasks || []).filter(t => 
       !t.isDeleted && !t.isArchived &&
       keywords.some(word => t.title.toLowerCase().includes(word) || t.description?.toLowerCase().includes(word))
     );

@@ -142,8 +142,8 @@ export default function PomodoroTimer() {
       osc.stop(beepCtx.currentTime + 1.5);
     } catch(e){}
     
-    if (Notification.permission === 'granted') {
-      new Notification('Pomodoro Alert! 🔔', {
+    if ('Notification' in window && window.Notification.permission === 'granted') {
+      new window.Notification('Pomodoro Alert! 🔔', {
         body: mode === 'work' ? 'Time for a well-deserved break!' : 'Let\'s get back to focus!',
       });
     }
