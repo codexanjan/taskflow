@@ -219,3 +219,19 @@ body.bg-cyber {
 body.bg-warm {
   background-image: linear-gradient(rgba(28, 12, 7, 0.9), rgba(28, 12, 7, 0.9)), radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.15), transparent 80%) !important;
 }
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

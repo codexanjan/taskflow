@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { goalsAPI } from '../utils/api';
-import { Plus, Target, CheckCircle2, Circle, Trash2, Calendar, Award } from 'lucide-react';
+import { Plus, Target, CheckCircle2, Circle, Trash2, Calendar, Award, ShieldAlert } from 'lucide-react';
 
 export default function GoalTracker({ tasks, guestMode }) {
   const [goals, setGoals] = useState([]);
@@ -10,14 +10,17 @@ export default function GoalTracker({ tasks, guestMode }) {
   const [newCategory, setNewCategory] = useState('Work');
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState(null);
 
   const fetchGoals = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await goalsAPI.getAll(guestMode);
       setGoals(data);
     } catch (err) {
       console.error('Failed to fetch goals:', err);
+      setError(err.message || 'Failed to fetch goals');
     } finally {
       setLoading(false);
     }
@@ -144,15 +147,45 @@ export default function GoalTracker({ tasks, guestMode }) {
 
       {/* Goals List */}
       {loading ? (
-        <div className="flex justify-center py-8">
-          <div className="w-6 h-6 border-2 border-indigo-650 border-t-transparent rounded-full animate-spin" />
+        <div className="space-y-4">
+          {[1, 2].map((n) => (
+            <div key={n} className="glass-card p-4 rounded-2xl border border-white/45 dark:border-slate-800/10 space-y-3 animate-pulse">
+              <div className="flex items-start gap-2">
+                <div className="w-5 h-5 rounded-full bg-slate-250/50 dark:bg-slate-800/30 mt-0.5"></div>
+                <div className="space-y-2 flex-grow">
+                  <div className="h-4 bg-slate-250/50 dark:bg-slate-800/30 rounded w-1/3"></div>
+                  <div className="h-3 bg-slate-250/50 dark:bg-slate-800/30 rounded w-2/3"></div>
+                </div>
+              </div>
+              <div className="flex justify-between items-center pt-2">
+                <div className="h-3 bg-slate-250/50 dark:bg-slate-800/30 rounded w-1/4"></div>
+                <div className="h-3 bg-slate-250/50 dark:bg-slate-800/30 rounded w-1/5"></div>
+              </div>
+              <div className="w-full h-1 bg-slate-250/35 dark:bg-slate-800/20 rounded-full"></div>
+            </div>
+          ))}
+        </div>
+      ) : error ? (
+        <div className="glass-card p-6 rounded-2xl border border-rose-500/20 dark:border-rose-550/10 bg-rose-500/5 text-center space-y-3 flex flex-col items-center justify-center animate-fade-in">
+          <ShieldAlert className="w-8 h-8 text-rose-500 animate-pulse" />
+          <div className="space-y-1">
+            <h5 className="text-xs font-bold text-rose-600 dark:text-rose-455">Failed to load goals</h5>
+            <p className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold">{error}</p>
+          </div>
+          <button
+            type="button"
+            onClick={fetchGoals}
+            className="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-[10px] font-bold shadow-md cursor-pointer transition-all hover:scale-105"
+          >
+            Retry Connection
+          </button>
         </div>
       ) : goals.length === 0 ? (
-        <div className="text-center py-8 text-slate-400 dark:text-slate-550 border border-dashed border-slate-200/30 dark:border-slate-800/20 rounded-2xl">
+        <div className="text-center py-8 text-slate-400 dark:text-slate-550 border border-dashed border-slate-200/30 dark:border-slate-800/20 rounded-2xl animate-fade-in">
           <p className="text-xs font-bold">No goals created yet. Set one above!</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4 animate-fade-in">
           {goals.map((goal) => {
             const progress = getGoalProgress(goal);
             const isCompleted = goal.status === 'Completed';

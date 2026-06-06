@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { logsAPI } from '../utils/api';
-import { Shield, Smartphone, Key, History, ToggleLeft, ToggleRight, Laptop, RefreshCw } from 'lucide-react';
+import { Shield, Smartphone, Key, History, ToggleLeft, ToggleRight, Laptop, RefreshCw, ShieldAlert } from 'lucide-react';
 
 export default function SecurityConsole({ guestMode }) {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [mfaEnabled, setMfaEnabled] = useState(false);
   const [otpCode, setOtpCode] = useState('');
 
   const fetchLogs = async () => {
     setLoading(true);
+    setError(null);
     try {
       const data = await logsAPI.getAll(guestMode);
       setLogs(data);
     } catch (err) {
       console.error(err);
+      setError(err.message || 'Failed to retrieve logs');
     } finally {
       setLoading(false);
     }
@@ -165,22 +168,41 @@ export default function SecurityConsole({ guestMode }) {
 
           <div className="glass-card p-3 rounded-2xl border border-white/45 dark:border-slate-800/10 flex-grow max-h-[310px] overflow-y-auto space-y-2.5">
             {loading ? (
-              <div className="flex justify-center py-12">
-                <div className="w-5 h-5 border-2 border-indigo-650 border-t-transparent rounded-full animate-spin" />
+              <div className="space-y-3.5 py-2">
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <div key={n} className="flex justify-between items-center gap-3 animate-pulse">
+                    <div className="h-2.5 bg-slate-250/50 dark:bg-slate-800/30 rounded w-2/3"></div>
+                    <div className="h-2 bg-slate-250/40 dark:bg-slate-800/20 rounded w-1/6"></div>
+                  </div>
+                ))}
+              </div>
+            ) : error ? (
+              <div className="text-center py-8 text-rose-500 text-[11px] font-semibold flex flex-col items-center justify-center gap-2 animate-fade-in">
+                <ShieldAlert className="w-6 h-6 text-rose-550 dark:text-rose-400 animate-bounce" />
+                <span className="text-slate-500 dark:text-slate-400 font-bold">{error}</span>
+                <button
+                  type="button"
+                  onClick={fetchLogs}
+                  className="mt-1 px-3 py-1 rounded-lg bg-rose-500/10 border border-rose-500/25 text-rose-650 dark:text-rose-400 text-[10px] font-bold hover:bg-rose-500/20 transition-all cursor-pointer"
+                >
+                  Retry
+                </button>
               </div>
             ) : logs.length === 0 ? (
-              <div className="text-center py-12 text-slate-400 dark:text-slate-550 text-xs font-bold">
+              <div className="text-center py-12 text-slate-400 dark:text-slate-550 text-xs font-bold animate-fade-in">
                 No activity logs recorded.
               </div>
             ) : (
-              logs.map((log) => (
-                <div key={log.id} className="text-[10px] leading-relaxed pb-2 border-b border-slate-200/30 dark:border-slate-800/5 flex items-start justify-between gap-3">
-                  <span className="text-slate-655 dark:text-slate-350 font-semibold">{log.action}</span>
-                  <span className="text-[8px] font-extrabold text-slate-400 uppercase tracking-wider shrink-0 mt-0.5">
-                    {new Date(log.created_at || log.timestamp).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                  </span>
-                </div>
-              ))
+              <div className="space-y-2.5 animate-fade-in">
+                {logs.map((log) => (
+                  <div key={log.id} className="text-[10px] leading-relaxed pb-2 border-b border-slate-200/30 dark:border-slate-800/5 flex items-start justify-between gap-3">
+                    <span className="text-slate-655 dark:text-slate-350 font-semibold">{log.action}</span>
+                    <span className="text-[8px] font-extrabold text-slate-400 uppercase tracking-wider shrink-0 mt-0.5">
+                      {new Date(log.created_at || log.timestamp).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+                    </span>
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         </div>
