@@ -7,6 +7,7 @@
 [![Express](https://img.shields.io/badge/Express-Backend-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38b2ac?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://taskflow-glass-todo.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 <br />
@@ -239,7 +240,7 @@ Add screenshots here after completing the project.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](file:///c:/Users/anjan/OneDrive/Documents/projects/to%20do%20list/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
@@ -250,4 +251,12 @@ This project is licensed under the MIT License - see the [LICENSE](file:///c:/Us
 
 ⭐ *If you like this project, don't forget to star the repository!*
 
-Made with ❤️ by Anjan Shetty
+---
+
+<div align="center">
+
+Made with ❤️ by [Anjan Shetty](https://github.com/codexanjan)
+
+[![GitHub](https://img.shields.io/badge/GitHub-codexanjan-181717?style=flat&logo=github)](https://github.com/codexanjan)
+
+</div>
