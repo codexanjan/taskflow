@@ -1,4 +1,14 @@
 import jwt from 'jsonwebtoken';
+import rateLimit from 'express-rate-limit';
+
+// Limits repeated auth attempts (register/login/OAuth) to mitigate credential stuffing
+export const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many attempts, please try again later' },
+});
 
 export default function authMiddleware(req, res, next) {
   // Get token from header
